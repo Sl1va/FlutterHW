@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:chinder/chuck_joker.dart';
 
 class ChuckNorrisApp extends StatelessWidget {
@@ -246,7 +248,16 @@ class CardDeckWithButton extends StatelessWidget {
                   color: const Color.fromARGB(255, 252, 255, 67),
                   child: IconButton(
                     onPressed: () {
-                      // TODO: save joke
+                      SharedPreferences.getInstance().then((pref) {
+                        String? curJokes = pref.getString('jokes');
+                        curJokes ??= '';                        
+                        String joke = deck.deckState.currentCard.jokeText;
+                        curJokes = '$curJokes\n:::$joke';
+
+                        pref.setString('jokes', curJokes);
+
+                        print('current jokes list: $curJokes');
+                      });
                       deck.deckState.moveToNext();
                     },
                     icon: const Icon(Icons.star),
