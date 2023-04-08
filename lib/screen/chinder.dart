@@ -214,24 +214,47 @@ class CardDeckWithButton extends StatelessWidget {
             deck,
           ],
         ),
-        SizedBox(
-          height: 60,
-          width: 150,
-          child: TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 133, 121, 227),
-              ),
-              onPressed: () {
-                deck.deckState.moveToNext();
-              },
-              child: const Text(
-                "NEXT",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 35,
+        Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: SizedBox(
+                height: 60,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 133, 121, 227),
+                  ),
+                  onPressed: () {
+                    deck.deckState.moveToNext();
+                  },
+                  child: const Text(
+                    "NEXT",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 35,
+                    ),
+                  ),
                 ),
-              )),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: SizedBox(
+                height: 60,
+                child: Material(
+                  color: const Color.fromARGB(255, 252, 255, 67),
+                  child: IconButton(
+                    onPressed: () {
+                      // TODO: save joke
+                      deck.deckState.moveToNext();
+                    },
+                    icon: const Icon(Icons.star),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -251,22 +274,23 @@ class DragableTrigger extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Container(
-        // color: Colors.red,
-        width: screenWidth / 7,
-        height: screenHeight / 1.5,
-        margin: EdgeInsets.fromLTRB(0, 0, screenWidth * rmarginRatio, 0),
-        child: Expanded(
-          child: DragTarget(
-            onWillAccept: (_) => false,
-            onLeave: (_) => trigger(),
-            builder: (BuildContext context, List<Object?> candidateData,
-                List<dynamic> rejectedData) {
-              return SizedBox(
-                width: screenWidth / 7,
-                height: screenHeight / 1.5,
-              );
-            },
-          ),
-        ));
+      // color: Colors.red,
+      width: screenWidth / 7,
+      height: screenHeight / 1.5,
+      margin: EdgeInsets.fromLTRB(0, 0, screenWidth * rmarginRatio, 0),
+      child: Expanded(
+        child: DragTarget(
+          onWillAccept: (_) => false,
+          onLeave: (_) => trigger(),
+          builder: (BuildContext context, List<Object?> candidateData,
+              List<dynamic> rejectedData) {
+            return SizedBox(
+              width: screenWidth / 7,
+              height: screenHeight / 1.5,
+            );
+          },
+        ),
+      ),
+    );
   }
 }
