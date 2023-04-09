@@ -1,16 +1,18 @@
-# hw1
+## Chinder - Tinder with Chuck Norris
 
-A new Flutter project.
+#### Emil Latypov, Flutter Homework #1
 
-## Getting Started
+![](./screenshots/ChuckIcon.png)
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+The application allows to view jokes about Chuck Norris and switch cards (by typing button **or** swiping card to the left or to the right).
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![](./screenshots/1.jpg)
+![](./screenshots/2.jpg)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The application allows to save favourite jokes locally.
+![](./screenshots/3.jpg)
+
+
+For working with json `json_serializable` is used, API requests performed via `http`.
+
