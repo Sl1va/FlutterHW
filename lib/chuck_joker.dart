@@ -1,5 +1,7 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:math';
+import 'dart:isolate';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -35,6 +37,9 @@ class JokeManager {
   String nextJoke = "(null)";
   bool _initialized = false;
 
+  static const preloadBuffer = 5;
+  final List<String> _preloadJokes = [];
+
   static const List<Color> availableColors = [
     Colors.greenAccent,
     Colors.redAccent,
@@ -63,13 +68,23 @@ class JokeManager {
 
   JokeManager() : _random = Random();
 
+  Future<String> _nextJoke() async {
+    if (_preloadJokes.isEmpty) {
+      for (int i = 0; i < preloadBuffer; ++i) {
+        _preloadJokes.add((await ChuckJoker.randJoke()).value);
+      }
+    }
+
+    return _preloadJokes.removeAt(0);
+  }
+
   Future<void> init() async {
     if (_initialized) {
       throw Exception("JokeManager already initialized");
     }
 
-    currentJoke = (await ChuckJoker.randJoke()).value;
-    nextJoke = (await ChuckJoker.randJoke()).value;
+    currentJoke = await _nextJoke();
+    nextJoke = await _nextJoke();
 
     currentCol = availableColors[_random.nextInt(availableColors.length)];
     nextCol = availableColors[_random.nextInt(availableColors.length)];
@@ -82,7 +97,7 @@ class JokeManager {
 
   Future<void> loadNextJoke() async {
     currentJoke = nextJoke;
-    nextJoke = (await ChuckJoker.randJoke()).value;
+    nextJoke = await _nextJoke();
 
     currentCol = nextCol;
     nextCol = availableColors[_random.nextInt(availableColors.length)];
