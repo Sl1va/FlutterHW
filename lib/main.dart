@@ -1,24 +1,22 @@
 // ignore_for_file: no_logic_in_create_state
-
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:chinder/screen/chinder.dart';
 import 'package:chinder/screen/favourites.dart';
 
-void main() => runApp(ChinderApp());
+void main() => runApp(const ChinderApp());
 
 class ChinderApp extends StatefulWidget {
+  const ChinderApp({super.key});
+
   @override
   State<StatefulWidget> createState() => _ChinderAppState();
 }
 
 class _ChinderAppState extends State<ChinderApp> {
   List<Widget> pages = [
-    ChuckNorrisApp(),
-    FavouritesScreen(),
+    const ChuckNorrisApp(),
+    const FavouritesScreen(),
   ];
 
   int index = 0;
