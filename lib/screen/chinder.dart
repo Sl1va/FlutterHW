@@ -248,17 +248,19 @@ class CardDeckWithButton extends StatelessWidget {
                   color: const Color.fromARGB(255, 252, 255, 67),
                   child: IconButton(
                     onPressed: () {
-                      SharedPreferences.getInstance().then((pref) {
+                      () async {
+                        var pref = await SharedPreferences.getInstance();
+                        // await pref.remove('jokes'); // DEBUG: clear the list
                         String? curJokes = pref.getString('jokes');
-                        curJokes ??= '';                        
+                        curJokes ??= '';
                         String joke = deck.deckState.currentCard.jokeText;
                         curJokes = '$curJokes\n:::$joke';
 
-                        pref.setString('jokes', curJokes);
+                        // print(curJokes);
 
-                        print('current jokes list: $curJokes');
-                      });
-                      deck.deckState.moveToNext();
+                        pref.setString('jokes', curJokes);
+                        deck.deckState.moveToNext();
+                      }();
                     },
                     icon: const Icon(Icons.star),
                   ),
